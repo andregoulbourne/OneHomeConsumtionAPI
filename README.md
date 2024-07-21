@@ -23,3 +23,6 @@ docker build -t <"image name"> .
 docker run -i -t <"image tag">
 
 
+For any User input prompts press enter twice once input has been entered
+
+
