@@ -27,11 +27,6 @@ mvn clean install assembly:single
 * Run the jar
 java -jar ${pathToJarUseTheJarLabeledWithDependencies}
 
-![image](https://user-images.githubusercontent.com/84467369/162369704-84d13d40-b77a-41b2-b2e8-10d749ab1dd9.png)
-![image](https://user-images.githubusercontent.com/84467369/162369748-33f43336-ef7f-4b6e-b63f-153bd684bf6d.png)
-
-
-
 ### Authorization
 
 The authorization file needs be placed in src/main/resources/
