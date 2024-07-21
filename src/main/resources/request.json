@@ -1,0 +1,37 @@
+{
+  "operationName": "GetSavedListings",
+  "variables": {
+    "groupId": "b91ad0c6-2f27-3c5c-bedc-b2104fdecdf6",
+    "savedSearchId": "c51d9d42-d9cf-3f44-b674-6275f1c6f9d6",
+    "suppressEvent": true,
+    "listingIds": <REQUEST_JSON_LISTING_IDS>,
+    "sort": {
+      "name": "openHouse.*.OpenHouseStartTime",
+      "order": "ASC"
+    },
+    "pageInput": {
+      "pageNum": 0,
+      "size": <REQUEST_JSON_PAGE_SIZE>
+    },
+    "includeDislikes": false,
+    "polygon": [
+      {
+        "latitude": 43.2658477168801,
+        "longitude": -77.52697490356445
+      },
+      {
+        "latitude": 43.0682771943744,
+        "longitude": -77.52697490356445
+      },
+      {
+        "latitude": 43.0682771943744,
+        "longitude": -77.84523509643554
+      },
+      {
+        "latitude": 43.2658477168801,
+        "longitude": -77.84523509643554
+      }
+    ]
+  },
+  "query": "query GetSavedListings($groupId: String!, $polygon: [PolygonInput], $listingIds: [String!]!, $sort: SortCriteria, $pageInput: PageInput, $savedSearchId: String!, $includeDislikes: Boolean!, $suppressEvent: Boolean!) {\n  listingsBySavedSearchId(groupId: $groupId, polygon: $polygon, osks: $listingIds, sort: $sort, pageInput: $pageInput, savedSearchId: $savedSearchId, includeDislikes: $includeDislikes, suppressEvent: $suppressEvent) {\n    pageInfo {\n      ...pageInfo\n      __typename\n    }\n    listings {\n      ...shortListingDetailsNoLargeImages\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment pageInfo on PageInfo {\n  totalElements\n  totalPages\n  pageNumber\n  pageSize\n  __typename\n}\n\nfragment shortListingDetailsNoLargeImages on ListingDetail {\n  id\n  hideWhenUnauth\n  property {\n    OriginatingSystemKey\n    StreetAdditionalInfo\n    StreetNumber\n    StreetDirPrefix\n    StreetName\n    StreetSuffix\n    StreetDirSuffix\n    UnitNumber\n    City\n    PostalCity\n    StateOrProvince\n    PostalCode\n    PostalCodePlus4\n    InternetAddressDisplayYN\n    SpecialListingConditions\n    NewConstructionYN\n    ListPrice\n    ListingId\n    CLIP\n    LivingArea\n    PropertyType\n    BedroomsTotal\n    BathroomsTotalInteger\n    LivingAreaTotal\n    BuildingAreaTotal\n    AvailabilityDate\n    Latitude\n    Longitude\n    LotSizeArea\n    LotSizeUnits\n    MajorChangeType\n    MajorChangeTimestamp\n    ClosePrice\n    PropertySubType\n    StructureType\n    PreviousListPrice\n    StandardStatus\n    AboveGradeFinishedArea\n    AboveGradeFinishedAreaUnits\n    WaterSource\n    Sewer\n    ElectricOnPropertyYN\n    ActivationDate\n    Utilities\n    __typename\n  }\n  media {\n    LongDescription\n    ShortDescription\n    ImageOf\n    MediaKey\n    MediaType\n    Order\n    Image {\n      Thumbnail {\n        ...imageDetails\n        __typename\n      }\n      Medium {\n        ...imageDetails\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n  openHouse {\n    OpenHouseDate\n    OpenHouseEndTime\n    OpenHouseStartTime\n    OpenHouseStatus\n    OpenHouseType\n    OpenHouseLiveStreamURL\n    Refreshments\n    __typename\n  }\n  customProperty {\n    ListingKey\n    LivingAreaRange\n    LivingAreaRangeUnits\n    LotSizeRange\n    BelowGradeFinishedAreaRange\n    BelowGradeUnfinishedAreaRange\n    AboveGradeFinishedAreaRange\n    AboveGradeUnfinishedAreaRange\n    AboveGradeBedrooms\n    BelowGradeBedrooms\n    BuildingAreaTotalRange\n    FIPSCode\n    FractionalShare\n    CustomFields {\n      TotalAvailSqFt\n      LeasedPricePerSqFt\n      GarageSqft\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment imageDetails on Image {\n  mediaUrl\n  width\n  height\n  size\n  __typename\n}\n"
+}
