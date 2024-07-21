@@ -32,10 +32,10 @@ java -jar ${pathToJarUseTheJarLabeledWithDependencies}
 The authorization file needs be placed in src/main/resources/
 
 name: authorization
-
-![image](https://github.com/user-attachments/assets/0949502e-677a-4a5c-adc4-b0de645ff8cb)
 We can get the specified API's from the oneHome website
+![image](https://github.com/user-attachments/assets/0949502e-677a-4a5c-adc4-b0de645ff8cb)
 
+### Sample Output
 ![image](https://github.com/user-attachments/assets/078e8158-42df-4dd5-84fd-154a2b4b75d2)
 
 
