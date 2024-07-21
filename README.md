@@ -6,6 +6,7 @@ Info is comming from OneHome.(Disclaimer: Using one Home as Third Part API to co
 * Java
 * Maven
 * CSV
+* JSON
 * Docker
 * HTTP
 
