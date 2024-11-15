@@ -31,7 +31,7 @@ public class Driver {
 		
 		var requestPayload1 = FileUtility.getInstance().getResource("request.json")
 				.replace(Constants.RequestJson.REQUEST_JSON_LISTING_IDS.getName(), HTTPRequest.getSavedList())
-				.replace(Constants.RequestJson.REQUEST_JSON_PAGE_SIZE.getName(), "200");
+				.replace(Constants.RequestJson.REQUEST_JSON_PAGE_SIZE.getName(), "300");
 		String response = HTTPRequest.getHttpRequest(uri, requestPayload1);
 		
 		logger.info("---------------------------------------------------------------------------------------");
