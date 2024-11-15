@@ -3,8 +3,8 @@ package com.andre.utility;
 import static com.andre.json.utility.JSONUtility.*;
 
 import java.util.List;
-
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.andre.model.Property;
 
@@ -12,7 +12,7 @@ public class JSONUtility {
 	private JSONUtility() {
 	}
 	
-	private static final Logger logger = Logger.getLogger(JSONUtility.class);
+	private static final Logger logger = LogManager.getLogger(com.andre.utility.JSONUtility.class);
 	
 	public static List<String> getJSONData(String json){
 		return com.andre.json.utility.JSONUtility.getJSONData(json);

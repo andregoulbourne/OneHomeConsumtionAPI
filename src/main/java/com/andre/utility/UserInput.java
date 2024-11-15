@@ -3,11 +3,12 @@ package com.andre.utility;
 import java.util.Scanner;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class UserInput {
 	
-	private static final Logger logger = Logger.getLogger(UserInput.class);
+	private static final Logger logger = LogManager.getLogger(UserInput.class);
 	
 	private static boolean isWhitespaceAtBeginningAndEndOk;
 	
@@ -28,7 +29,7 @@ public class UserInput {
 	public static String takeInUserOutputDirectoryPathInput() {
 		var result = scanString(in);
 		
-		logger.warn("input: [" + result + "]");
+		logger.warn("input: [ {} ]", result);
 		
 		if(result.equalsIgnoreCase("Q"))
 			result = "";
@@ -55,7 +56,7 @@ public class UserInput {
 		}
 	}
 	
-	private static final char WHITESPACECHARACTER = " ".charAt(0);
+	private static final char WHITE_SPACE_CHARACTER = ' ';
 	
 	private static String getRidOfWhiteSpace(String string) {
 		StringBuilder result = new StringBuilder();
@@ -70,7 +71,7 @@ public class UserInput {
 					countWhitespace = 0;
 				}
 				if(countWhitespace > 1 && flag) break;
-				if(WHITESPACECHARACTER == string.charAt(i) && flag) countWhitespace +=1;
+				if(WHITE_SPACE_CHARACTER == string.charAt(i) && flag) countWhitespace +=1;
 				if(flag && isValidForInput(string.charAt(i)) || countWhitespace == 1) {
 					result.append(string.charAt(i));
 					if(countWhitespace != 0 && isValidForInput(string.charAt(i))) countWhitespace = 0;
@@ -82,7 +83,7 @@ public class UserInput {
 		}
 		String myAnswer = result.toString();
 		
-		if(myAnswer.charAt(myAnswer.length()-1)==WHITESPACECHARACTER) return cutLastCharacter(myAnswer);
+		if(myAnswer.charAt(myAnswer.length()-1)== WHITE_SPACE_CHARACTER) return cutLastCharacter(myAnswer);
 		return myAnswer;
 	}
 	

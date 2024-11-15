@@ -10,10 +10,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse.BodyHandlers;
 
-import org.apache.log4j.Logger;
-
 import com.andre.utility.FileUtility;
 import com.andre.utility.JSONUtility;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class HTTPRequest {
 	
@@ -24,7 +24,7 @@ public class HTTPRequest {
 	
 	private static String apiKey;
 	
-	private static final Logger logger = Logger.getLogger(HTTPRequest.class);
+	private static final Logger logger = LogManager.getLogger(HTTPRequest.class);
 
 	public static String getHttpRequest(String uri, String jsonString) throws IOException, InterruptedException, URISyntaxException {
 		var httpRequest = HttpRequest.newBuilder()
@@ -37,15 +37,17 @@ public class HTTPRequest {
 		var httpClient = HttpClient.newHttpClient();	
 		
 		var httpResponse = httpClient.send(httpRequest, BodyHandlers.ofString());
-	
-		logger.debug("HTTP Response {}" + httpResponse.body());
+
+		var stringResponse = httpResponse.body();
+
+		logger.debug("HTTP Response {}", stringResponse);
 		
 		return httpResponse.body();
 	}
 	
 	private static String setAuthorization1() throws IOException, InterruptedException, URISyntaxException {
 		authorization = FileUtility.getInstance().getResource("authorization").split(Constants.PIPE_DELIM);
-		
+
 		// run http to get the token
 		var httpRequest = HttpRequest.newBuilder()
 				.uri(new URI(authorization[0]))

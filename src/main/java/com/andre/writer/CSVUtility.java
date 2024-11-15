@@ -5,13 +5,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import com.andre.model.Property;
 import com.opencsv.CSVWriter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CSVUtility {
-	private static final Logger logger = Logger.getLogger(CSVUtility.class);
+	private static final Logger logger = LogManager.getLogger(CSVUtility.class);
 	
 	private CSVUtility() {
 	}

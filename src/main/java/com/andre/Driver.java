@@ -6,7 +6,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 
 import com.andre.http.Constants;
 import com.andre.http.Constants.PropertyCriteria;
@@ -17,9 +16,11 @@ import com.andre.utility.FileUtility;
 import com.andre.utility.JSONUtility;
 import com.andre.utility.UserInput;
 import com.andre.writer.CSVUtility;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Driver {
-	private static final Logger logger = Logger.getLogger(Driver.class);
+	private static final Logger logger = LogManager.getLogger(Driver.class);
 	
 	private static String outputPathDir = "";
 	

@@ -4,11 +4,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.InputStreamReader;
-
-import org.apache.log4j.Logger;
+import java.util.Objects;
 
 import com.andre.Driver;
 import com.andre.http.Constants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class FileUtility {
 	
@@ -22,12 +23,12 @@ public class FileUtility {
 		 return SingletonHelper.INSTANCE;
 	}
 	
-	private static final Logger logger = Logger.getLogger(FileUtility.class);
+	private static final Logger logger = LogManager.getLogger(FileUtility.class);
 
 	public String getResource(String resourceFileName) {
 		var result = new StringBuilder();
 		
-		try (BufferedReader br = new BufferedReader(new InputStreamReader(Driver.class.getClassLoader().getResourceAsStream(resourceFileName)))) {
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(Objects.requireNonNull(Driver.class.getClassLoader().getResourceAsStream(resourceFileName))))) {
 			var sCurrentLine="";
 			while((sCurrentLine = br.readLine()) != null) {
 				result.append(sCurrentLine);
@@ -36,7 +37,7 @@ public class FileUtility {
 			logger.error(Constants.EXCEPTION, e);
 		}
 		
-		if("".equals(result.toString()))
+		if("".contentEquals(result))
 			return getJsonString(new File("./src/main/resources/"+resourceFileName));
 		else
 			return result.toString();
