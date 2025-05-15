@@ -5,6 +5,7 @@ Info is comming from OneHome.(Disclaimer: Using one Home as Third Part API to co
 # Technologies Used
 * Java
 * Maven
+* Gradle
 * CSV
 * JSON
 * Docker
@@ -24,9 +25,13 @@ Info is comming from OneHome.(Disclaimer: Using one Home as Third Part API to co
 * Publish The custom JSONUtil jar use in this project to your local mvn repository
 mvn install:install-file -Dfile=${pathToJSONJar} -DgroupId=com.andre -DartifactId=JSONUtil -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar -DgeneratePom=true
 * Assemple the Jar
-mvn clean install assembly:single
+Run from project directory
+Windows
+gradlew build
+Linux Or Mac
+./gradlew build
 * Run the jar
-java -jar ${pathToJarUseTheJarLabeledWithDependencies}
+java -jar ${pathToJarUseTheJar}
 
 ### Authorization
 

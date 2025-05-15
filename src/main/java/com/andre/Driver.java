@@ -3,6 +3,7 @@ package com.andre;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -24,7 +25,7 @@ public class Driver {
 	
 	private static String outputPathDir = "";
 	
-	// java -jar C:\Users\Andre\git\ConsumeAPI\target\ConsumeAPI-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+	// java -jar ./build/libs/OneHomeConsumtionAPI-0.0.1-SNAPSHOT.jar
 	public static void main(String[] args) throws IOException, InterruptedException, URISyntaxException {
 		logger.info("--------------------------Starting Property Analysis-------------------------------------------------------------");
 		String uri = "https://services.onehome.com/graphql?GetSavedListings";
@@ -58,7 +59,7 @@ public class Driver {
 		
 		writeOutActiveReport(result);
 		
-		writeOutActiveReport10DaysOldOnMarket(result);
+		writeOutActiveReport14DaysOldOnMarket(result);
 		
 		writeOutActiveSoldReport(result);
 		
@@ -84,17 +85,10 @@ public class Driver {
 		logger.info("START generate report type: 'ALL'");
 		
 		List<Property> filterList = result.stream()
-				.filter(obj -> isInDesiredZip(obj.getAddress()))
-				.filter(obj -> obj.getPrice() <= (int) PropertyCriteria.PRICE_MAX.getValue())
-				.filter(obj -> obj.getBeds() > (int) PropertyCriteria.BED_MIN.getValue())
-				.filter(obj -> obj.getSquareFootage() <= (int) PropertyCriteria.SQUARE_FOOTAGE_MAX.getValue())
-				.filter(obj -> obj.getDaysOnMarket() <= (int) PropertyCriteria.DAYS_ON_MARKET_MAX.getValue())
-				.filter(obj -> obj.getTax() <= (Double) PropertyCriteria.YEARLY_TAX_MAX.getValue())
-				.sorted((a, b) -> b.getPrice().compareTo(a.getPrice()))
 				.toList();
 			
 	
-		finishingWriteoutSteps(filterList, ReportType.REPORT_ALL.getValue());
+		finishingWriteOutSteps(filterList, ReportType.REPORT_ALL.getValue());
 	}
 	
 	
@@ -102,7 +96,6 @@ public class Driver {
 		logger.info("START generate report type: 'Active'");
 		
 		List<Property> filterList = result.stream()
-				.filter(obj -> isInDesiredZip(obj.getAddress()))
 				.filter(obj -> obj.getPrice() <= (int) PropertyCriteria.PRICE_MAX.getValue())
 				.filter(obj -> obj.getBeds() > (int) PropertyCriteria.BED_MIN.getValue())
 				.filter(obj -> obj.getSquareFootage() <= (int) PropertyCriteria.SQUARE_FOOTAGE_MAX.getValue())
@@ -113,14 +106,13 @@ public class Driver {
 				.sorted((a, b) -> b.getPrice().compareTo(a.getPrice()))
 				.toList();
 		
-		finishingWriteoutSteps(filterList, ReportType.REPORT_ACTIVE.getValue());
+		finishingWriteOutSteps(filterList, ReportType.REPORT_ACTIVE.getValue());
 	}
 	
-	private static void writeOutActiveReport10DaysOldOnMarket(List<Property> result) {
+	private static void writeOutActiveReport14DaysOldOnMarket(List<Property> result) {
 		logger.info("START generate report type: 'Active' 14Days old");
 		
 		List<Property> filterList = result.stream()
-				.filter(obj -> isInDesiredZip(obj.getAddress()))
 				.filter(obj -> obj.getPrice() <= (int) PropertyCriteria.PRICE_MAX.getValue())
 				.filter(obj -> obj.getBeds() > (int) PropertyCriteria.BED_MIN.getValue())
 				.filter(obj -> obj.getSquareFootage() <= (int) PropertyCriteria.SQUARE_FOOTAGE_MAX.getValue())
@@ -131,14 +123,13 @@ public class Driver {
 				.sorted((a, b) -> b.getPrice().compareTo(a.getPrice()))
 				.toList();
 		
-		finishingWriteoutSteps(filterList, ReportType.REPORT_ACTIVE_14DAYS.getValue());
+		finishingWriteOutSteps(filterList, ReportType.REPORT_ACTIVE_14DAYS.getValue());
 	}
 	
 	private static void writeOutActiveSoldReport(List<Property> result) {
 		logger.info("START generate report type: 'Sold'");
 		
 		List<Property> filterList = result.stream()
-				.filter(obj -> isInDesiredZip(obj.getAddress()))
 				.filter(obj -> obj.getPrice() <= (int) PropertyCriteria.PRICE_MAX.getValue())
 				.filter(obj -> obj.getBeds() > (int) PropertyCriteria.BED_MIN.getValue())
 				.filter(obj -> obj.getSquareFootage() <= (int) PropertyCriteria.SQUARE_FOOTAGE_MAX.getValue())
@@ -148,28 +139,28 @@ public class Driver {
 				.sorted((a, b) -> b.getPrice().compareTo(a.getPrice()))
 				.toList();
 		
-		finishingWriteoutSteps(filterList, ReportType.REPORT_SOLD.getValue());
+		finishingWriteOutSteps(filterList, ReportType.REPORT_SOLD.getValue());
 	}
 	
 	private static void writeOutActiveAnalysisInput(List<Property> result) {
 		logger.info("START generate 'Active' analysis input");
 		
 		List<Property> filterList = result.stream()
-				.filter(obj -> isInDesiredZip(obj.getAddress()))
 				.filter(obj -> obj.getPrice() <= (int) PropertyCriteria.PRICE_MAX.getValue())
 				.filter(obj -> obj.getBeds() > (int) PropertyCriteria.BED_MIN.getValue())
+				.filter(obj -> obj.getDaysOnMarket() <= 14)
 				.filter(obj -> obj.getSquareFootage() <= (int) PropertyCriteria.SQUARE_FOOTAGE_MAX.getValue())
 				.filter(obj -> PropertyCriteria.ACTIVE_STATUS.getValue().equals(obj.getStandardStatus()))
 				.filter(obj -> obj.getDaysOnMarket() <= (int) PropertyCriteria.DAYS_ON_MARKET_MAX.getValue())
 				.filter(obj -> obj.getTax() <= (Double) PropertyCriteria.YEARLY_TAX_MAX.getValue())
 				.filter(obj -> hasDesiredSiding(obj.getContructionMaterial()))
-				.sorted((a, b) -> a.getPrice().compareTo(b.getPrice()))
+				.sorted(Comparator.comparing(Property::getPrice))
 				.toList();
 		
-		finishingWriteoutStepsAnalysisInput(filterList, ReportType.ACTIVE_ANALYSIS_INPUT.getValue());
+		finishingWriteOutStepsAnalysisInput(filterList, ReportType.ACTIVE_ANALYSIS_INPUT.getValue());
 	}
 	
-	private static void finishingWriteoutSteps(List<Property> filterList, String path) {
+	private static void finishingWriteOutSteps(List<Property> filterList, String path) {
 		filterList.forEach(logger::info);
 		
 		if(StringUtils.isBlank(outputPathDir.replace(File.separator, "")))
@@ -178,7 +169,7 @@ public class Driver {
 			CSVUtility.writeOutListOfProperties(outputPathDir+path, filterList);
 	}
 	
-	private static void finishingWriteoutStepsAnalysisInput(List<Property> filterList, String path) {
+	private static void finishingWriteOutStepsAnalysisInput(List<Property> filterList, String path) {
 		filterList.forEach(logger::info);
 		
 		if(StringUtils.isBlank(outputPathDir.replace(File.separator, "")))
@@ -186,13 +177,14 @@ public class Driver {
 		else
 			CSVUtility.writeOutAnalysisInput(outputPathDir+path, filterList);
 	}
-	
+
+	/*
 	private static boolean isInDesiredZip(String address) {
 		String[] neighborHoods = {"14609", "14613", "14621", "14620", "14606", "14607", "14608", "14611"};
 		
 		return isInDesired(neighborHoods, address);
 	}
-	
+	*/
 	private static boolean hasDesiredSiding(String buildMaterial) {
 		String[] sidings = {"Composite", "Aluminum", "Steel", "Vinyl"};
 		
