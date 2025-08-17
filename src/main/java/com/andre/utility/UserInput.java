@@ -6,11 +6,18 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Utility class for handling user input in the console.
+ * This class provides methods to take user input, process it, and manage whitespace.
+ */
 public class UserInput {
-	
 	private static final Logger logger = LogManager.getLogger(UserInput.class);
+
+	private static final char WHITE_SPACE_CHARACTER = ' ';
 	
 	private static boolean isWhitespaceAtBeginningAndEndOk;
+
+	private static Scanner in;
 	
 	static {
 		isWhitespaceAtBeginningAndEndOk = true;
@@ -18,14 +25,22 @@ public class UserInput {
 	
 	private UserInput() {
 	}
-	
-	private static Scanner in;
-		
+
+	/**
+	 * Initializes the scanner for user input.
+	 * This method should be called before taking any user input.
+	 */
 	public static void initScanner() {
 		in = new Scanner(System.in);
 	}
 
-	
+
+	/**
+	 * Takes user input for the output directory path.
+	 * If the user inputs "Q", it returns an empty string.
+	 *
+	 * @return the user input as a string, or an empty string if "Q" is entered
+	 */
 	public static String takeInUserOutputDirectoryPathInput() {
 		var result = scanString(in);
 		
@@ -36,7 +51,11 @@ public class UserInput {
 		
 		return result;
 	}
-	
+
+	/**
+	 * Closes the scanner to release resources.
+	 * This method should be called when user input is no longer needed.
+	 */
 	public static void closeScanner() {
 		in.close();
 	}
@@ -55,8 +74,6 @@ public class UserInput {
 			return "";
 		}
 	}
-	
-	private static final char WHITE_SPACE_CHARACTER = ' ';
 	
 	private static String getRidOfWhiteSpace(String string) {
 		StringBuilder result = new StringBuilder();
@@ -97,11 +114,6 @@ public class UserInput {
 	
 	private static String cutLastCharacter(String string) {
 		return string.substring(0, string.length()-2);
-	}
-
-
-	public static void setWhitespaceAtBeginningAndEndOk(boolean isWhitespaceAtBeginningAndEndOk) {
-		UserInput.isWhitespaceAtBeginningAndEndOk = isWhitespaceAtBeginningAndEndOk;
 	}
 
 }

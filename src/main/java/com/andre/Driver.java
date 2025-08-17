@@ -8,9 +8,9 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.andre.http.Constants;
-import com.andre.http.Constants.PropertyCriteria;
-import com.andre.http.Constants.ReportType;
+import com.andre.utility.Constants;
+import com.andre.utility.Constants.PropertyCriteria;
+import com.andre.utility.Constants.ReportType;
 import com.andre.http.HTTPRequest;
 import com.andre.model.Property;
 import com.andre.utility.FileUtility;
@@ -113,6 +113,7 @@ public class Driver {
 		logger.info("START generate report type: 'Active' 14Days old");
 		
 		List<Property> filterList = result.stream()
+				.filter(obj -> obj.getPrice() > (int) PropertyCriteria.PRICE_MIN.getValue())
 				.filter(obj -> obj.getPrice() <= (int) PropertyCriteria.PRICE_MAX.getValue())
 				.filter(obj -> obj.getBeds() > (int) PropertyCriteria.BED_MIN.getValue())
 				.filter(obj -> obj.getSquareFootage() <= (int) PropertyCriteria.SQUARE_FOOTAGE_MAX.getValue())
@@ -154,7 +155,7 @@ public class Driver {
 				.filter(obj -> obj.getDaysOnMarket() <= (int) PropertyCriteria.DAYS_ON_MARKET_MAX.getValue())
 				.filter(obj -> obj.getTax() <= (Double) PropertyCriteria.YEARLY_TAX_MAX.getValue())
 				.filter(obj -> hasDesiredSiding(obj.getContructionMaterial()))
-				.sorted(Comparator.comparing(Property::getPrice))
+				.sorted(Comparator.comparing(Property::getPrice).reversed())
 				.toList();
 		
 		finishingWriteOutStepsAnalysisInput(filterList, ReportType.ACTIVE_ANALYSIS_INPUT.getValue());

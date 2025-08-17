@@ -10,12 +10,24 @@ import com.opencsv.CSVWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Utility class for writing property data to CSV files.
+ * This class provides methods to write lists of properties to CSV files
+ * for reporting and analysis purposes.
+ */
 public class CSVUtility {
 	private static final Logger logger = LogManager.getLogger(CSVUtility.class);
 	
 	private CSVUtility() {
 	}
-	
+
+	/**
+	 * Writes a list of properties to a CSV file at the specified path.
+	 * The CSV file will include headers for each property attribute.
+	 *
+	 * @param path the file path where the CSV will be written
+	 * @param properties the list of properties to write to the CSV
+	 */
 	public static void writeOutListOfProperties(String path, List<Property> properties) {
 	    File file = new File(path); 
 	    try(CSVWriter writer = new CSVWriter(new FileWriter(file))) { 
@@ -39,7 +51,14 @@ public class CSVUtility {
 	        writer.writeNext(data); 
 		});
 	}
-	
+
+	/**
+	 * Writes a list of properties to a CSV file for analysis input.
+	 * The CSV file will include headers for price, address, and tax.
+	 *
+	 * @param path the file path where the CSV will be written
+	 * @param properties the list of properties to write to the CSV
+	 */
 	public static void writeOutAnalysisInput(String path, List<Property> properties) {
 		File file = new File(path); 
 		try(CSVWriter writer = new CSVWriter(new FileWriter(file))) { 

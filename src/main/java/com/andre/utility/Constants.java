@@ -1,11 +1,11 @@
-package com.andre.http;
+package com.andre.utility;
 
 public class Constants {
-	
+	public static final String EXCEPTION = "An exception occurred ...";
+	public static final String PIPE_DELIM = "\\|";
+
 	private Constants(){
 	}
-
-	public static final String EXCEPTION = "An exception occurred ...";
 	
 	public enum ReportType {
 		REPORT_ALL("report_all.csv"),REPORT_ACTIVE("report_active.csv"),REPORT_ACTIVE_14DAYS("report_active_14_days.csv"),REPORT_SOLD("report_sold.csv"),ACTIVE_ANALYSIS_INPUT("analysis_input.csv");
@@ -23,7 +23,7 @@ public class Constants {
 	
 	
 	public enum PropertyCriteria {
-		SQUARE_FOOTAGE_MAX(2850),PRICE_MAX(150000),YEARLY_TAX_MAX((double) 450 * 12),BED_MIN(3),DAYS_ON_MARKET_MAX(120),ACTIVE_STATUS("Active");
+		SQUARE_FOOTAGE_MAX(2850), PRICE_MIN(90000), PRICE_MAX(150000),YEARLY_TAX_MAX((double) 450 * 12),BED_MIN(3),DAYS_ON_MARKET_MAX(120),ACTIVE_STATUS("Active");
 		
 		private final Object value;
 		
@@ -50,7 +50,5 @@ public class Constants {
 			this.name=name;
 		}
 	}
-	
-	public static final String PIPE_DELIM = "\\|";
 	
 }

@@ -8,20 +8,44 @@ import org.apache.logging.log4j.Logger;
 
 import com.andre.model.Property;
 
+/**
+ * Utility class for handling JSON data related to properties.
+ * This class provides methods to extract property information from JSON strings,
+ * convert JSON data into Property objects, and enrich Property objects with additional data.
+ */
 public class JSONUtility {
+	private static final Logger logger = LogManager.getLogger(com.andre.utility.JSONUtility.class);
+
 	private JSONUtility() {
 	}
-	
-	private static final Logger logger = LogManager.getLogger(com.andre.utility.JSONUtility.class);
-	
+
+	/**
+	 * Extracts JSON data from a given JSON string.
+	 *
+	 * @param json the JSON string to extract data from
+	 * @return a list of strings representing the extracted JSON data
+	 */
 	public static List<String> getJSONData(String json){
 		return com.andre.json.utility.JSONUtility.getJSONData(json);
 	}
-	
+
+	/**
+	 * Extracts specific field data from a given JSON string.
+	 *
+	 * @param json the JSON string to extract data from
+	 * @param field the field name to extract data for
+	 * @return a list of strings representing the extracted field data
+	 */
 	public static List<String> getJSONData(String json, String field){
 		return com.andre.json.utility.JSONUtility.getJSONData(json, field);
 	}
-	
+
+	/**
+	 * Extacts a list of Property objects from a list of JSON strings.
+	 *
+	 * @param propertyJSONs the list of JSON strings representing properties
+	 * @return a list of {@link Property} objects created from the JSON strings
+	 */
 	public static List<Property> convertJsonToPropertyObj(List<String> propertyJSONs){
 		return propertyJSONs.stream()
 			.map(propertyJSON -> {
@@ -69,7 +93,14 @@ public class JSONUtility {
 		
 		return result;
 	}
-	
+
+	/**
+	 * Enriches a Property object with additional data from a JSON string.
+	 * This method adds fields to the Property object based on annotations.
+	 *
+	 * @param property the Property object to enrich
+	 * @param propertyJSON the JSON string containing additional data for the Property
+	 */
 	public static void enrichPropertyObj(Property property, String propertyJSON){
 		addFieldsFromAnnotations(property, propertyJSON, true);
 	}
