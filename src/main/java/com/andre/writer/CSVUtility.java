@@ -29,6 +29,7 @@ public class CSVUtility {
 	 * @param properties the list of properties to write to the CSV
 	 */
 	public static void writeOutListOfProperties(String path, List<Property> properties) {
+		logger.info("Writing out list of properties to CSV at path: {}", path);
 	    File file = new File(path); 
 	    try(CSVWriter writer = new CSVWriter(new FileWriter(file))) { 
 	        // adding header to csv 
@@ -60,6 +61,7 @@ public class CSVUtility {
 	 * @param properties the list of properties to write to the CSV
 	 */
 	public static void writeOutAnalysisInput(String path, List<Property> properties) {
+		logger.info("Writing out analysis input to CSV at path: {}", path);
 		File file = new File(path); 
 		try(CSVWriter writer = new CSVWriter(new FileWriter(file))) { 
 			// adding header to csv 
