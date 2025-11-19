@@ -102,6 +102,30 @@ public class JSONUtility {
 	 * @param propertyJSON the JSON string containing additional data for the Property
 	 */
 	public static void enrichPropertyObj(Property property, String propertyJSON){
+		property.setRents(getRents(propertyJSON));
 		addFieldsFromAnnotations(property, propertyJSON, true);
 	}
+
+	private static List<Double> getRents(String propertyJSON) {
+		var rents = getJSONData(propertyJSON, "UnitTypeActualRent");
+
+		return rents.stream()
+				.map(rent -> {
+					double result;
+
+					logger.debug("Rent String: {}", rent);
+
+					try {
+						result = Double.parseDouble(santizeResult(rent));
+					} catch (NumberFormatException e) {
+						logger.error(e);
+						result = 0.0;
+					}
+
+					return result;
+				})
+				.filter(rent -> rent > 0)
+				.toList();
+	}
+
 }
