@@ -23,7 +23,9 @@ public class Constants {
 	
 	
 	public enum PropertyCriteria {
-		SQUARE_FOOTAGE_MAX(2850), PRICE_MIN(90000), PRICE_MAX(150000),YEARLY_TAX_MAX((double) 450 * 12),BED_MIN(3),DAYS_ON_MARKET_MAX(120),ACTIVE_STATUS("Active");
+		SQUARE_FOOTAGE_MAX(2850), PRICE_MAX(170000),
+		YEARLY_TAX_MAX((double) 450 * 12),BED_MIN(3),DAYS_ON_MARKET_MAX(120),
+		ACTIVE_STATUS("Active"), MIN_TOTAL_RENT(2100);
 		
 		private final Object value;
 		

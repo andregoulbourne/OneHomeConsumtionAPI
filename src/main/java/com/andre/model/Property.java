@@ -3,6 +3,8 @@ package com.andre.model;
 import com.andre.json.annotations.JSON;
 import com.andre.json.annotations.JSONField;
 
+import java.util.List;
+
 @JSON
 public class Property {
 	
@@ -36,6 +38,8 @@ public class Property {
 	private String listingTerm;
 	@JSONField(jsonFieldName="TaxAnnualAmount", isEnrichment=true)
 	private Double tax;
+
+	private List<Double> rents;
 	
 	
 	public String getId() {
@@ -129,13 +133,46 @@ public class Property {
 	public void setTax(Double tax) {
 		this.tax = tax;
 	}
+
+	public List<Double> getRents() {
+		return rents;
+	}
+
+	public void setRents(List<Double> rents) {
+		this.rents = rents;
+	}
+
+	public Double getTotalRents() {
+		double total;
+
+		if(rents == null || rents.isEmpty()) {
+			total = 0.0;
+		} else {
+			total = rents.stream().reduce(0.0, Double::sum);
+		}
+
+		return total;
+	}
+
 	@Override
 	public String toString() {
-		return "Property [id=" + id + ", address=" + address + ", price=" + price + ", squareFootage=" + squareFootage
-				+ ", beds=" + beds + ", baths=" + baths + ", openHouse=" + openHouse + ", standardStatus="
-				+ standardStatus + ", daysOnMarket=" + daysOnMarket + ", contructionMaterial=" + contructionMaterial
-				+ ", yearBuilt=" + yearBuilt + ", flooring=" + flooring + ", heating=" + heating + ", listingTerm="
-				+ listingTerm + ", tax=" + tax + "]";
+		return "Property{" +
+				"id='" + id + '\'' +
+				", address='" + address + '\'' +
+				", price=" + price +
+				", squareFootage=" + squareFootage +
+				", beds=" + beds +
+				", baths=" + baths +
+				", openHouse='" + openHouse + '\'' +
+				", standardStatus='" + standardStatus + '\'' +
+				", daysOnMarket=" + daysOnMarket +
+				", contructionMaterial='" + contructionMaterial + '\'' +
+				", yearBuilt=" + yearBuilt +
+				", flooring='" + flooring + '\'' +
+				", heating='" + heating + '\'' +
+				", listingTerm='" + listingTerm + '\'' +
+				", tax=" + tax +
+				", rents=" + rents +
+				'}';
 	}
-	
 }

@@ -32,8 +32,8 @@ public class CSVUtility {
 		logger.info("Writing out list of properties to CSV at path: {}", path);
 	    File file = new File(path); 
 	    try(CSVWriter writer = new CSVWriter(new FileWriter(file))) { 
-	        // adding header to csv 
-	        String[] header = { "Address", "Price", "Square Footage", "Beds/Baths", "Open House", "Status", "Days On Market", "Contruction Material", "Year Build", "Flooring", "Heating", "Listing Terms", "Monthly Tax Value"}; 
+	        // adding header to csv
+	        String[] header = { "Address", "Price", "Square Footage", "Beds/Baths", "Rents", "Open House", "Status", "Days On Market", "Contruction Material", "Year Build", "Flooring", "Heating", "Listing Terms", "Monthly Tax Value"};
 	        writer.writeNext(header); 
 	  
 	        // add data to csv 
@@ -46,7 +46,7 @@ public class CSVUtility {
 	
 	private static void writeOutlListOfProperties(List<Property> properties, CSVWriter writer) {
 		properties.forEach(property -> {
-			String[] data = { property.getAddress(), String.valueOf(property.getPrice()), String.valueOf(property.getSquareFootage()), property.getBeds() + "/" + property.getBaths(), property.getOpenHouse(), property.getStandardStatus(), String.valueOf(property.getDaysOnMarket()),
+			String[] data = { property.getAddress(), String.valueOf(property.getPrice()), String.valueOf(property.getSquareFootage()), property.getBeds() + "/" + property.getBaths(), String.valueOf(property.getTotalRents()),property.getOpenHouse(), property.getStandardStatus(), String.valueOf(property.getDaysOnMarket()),
 						property.getContructionMaterial(), String.valueOf(property.getYearBuilt()), property.getFlooring(), property.getHeating(), property.getListingTerm(), String.valueOf((property.getTax() / 12))
 					}; 
 	        writer.writeNext(data); 
@@ -64,8 +64,8 @@ public class CSVUtility {
 		logger.info("Writing out analysis input to CSV at path: {}", path);
 		File file = new File(path); 
 		try(CSVWriter writer = new CSVWriter(new FileWriter(file))) { 
-			// adding header to csv 
-			String[] header = {  "Price", "Address", "", "Tax"}; 
+			// adding header to csv
+			String[] header = {  "Price", "Address", "", "Tax", "Rents"};
 			writer.writeNext(header); 
 			
 			// add data to csv 
@@ -78,7 +78,7 @@ public class CSVUtility {
 	
 	private static void writeOutAnalysisInput(List<Property> properties, CSVWriter writer) {
 		properties.forEach(property -> {
-			String[] data = { String.valueOf(property.getPrice()), property.getAddress(),  "", String.valueOf((property.getTax() / 12)) }; 
+			String[] data = { String.valueOf(property.getPrice()), property.getAddress(),  "", String.valueOf((property.getTax() / 12)), String.valueOf(property.getTotalRents()) };
 			writer.writeNext(data); 
 		});
 	}

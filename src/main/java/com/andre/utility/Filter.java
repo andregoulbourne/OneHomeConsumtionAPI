@@ -10,18 +10,22 @@ public class Filter {
         Predicate<Property> isInPriceRange = obj -> obj.getPrice() <= (int) Constants.PropertyCriteria.PRICE_MAX.getValue();
         Predicate<Property> isInDaysOnMarketRange = obj -> obj.getDaysOnMarket() <= (int) Constants.PropertyCriteria.DAYS_ON_MARKET_MAX.getValue();
         Predicate<Property> isActive = obj -> Constants.PropertyCriteria.ACTIVE_STATUS.getValue().equals(obj.getStandardStatus());
+        Predicate<Property> hasMinRentsOrIsZero = obj -> obj.getTotalRents() >= (int) Constants.PropertyCriteria.MIN_TOTAL_RENT.getValue() || obj.getTotalRents() == 0;
 
         return filter(isInDaysOnMarketRange, isActive)
-                .and(isInPriceRange);
+                .and(isInPriceRange)
+                .and(hasMinRentsOrIsZero);
     }
 
     public Predicate<Property> filter14Days() {
         Predicate<Property> isInPriceRange = obj -> obj.getPrice() <= (int) Constants.PropertyCriteria.PRICE_MAX.getValue();
         Predicate<Property> isInDaysOnMarketRange = obj -> obj.getDaysOnMarket() <= 14;
         Predicate<Property> isActive = obj -> Constants.PropertyCriteria.ACTIVE_STATUS.getValue().equals(obj.getStandardStatus());
+        Predicate<Property> hasMinRentsOrIsZero = obj -> obj.getTotalRents() >= (int) Constants.PropertyCriteria.MIN_TOTAL_RENT.getValue() || obj.getTotalRents() == 0;
 
         return filter(isInDaysOnMarketRange, isActive)
-                .and(isInPriceRange);
+                .and(isInPriceRange)
+                .and(hasMinRentsOrIsZero);
     }
 
     public Predicate<Property> filterSold() {
